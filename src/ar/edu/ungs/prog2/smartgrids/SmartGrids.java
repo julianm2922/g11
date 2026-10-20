@@ -2,7 +2,7 @@ package ar.edu.ungs.prog2.smartgrids;
 
 import java.util.List;
 import java.util.Map;
-
+//holamundo
 public class SmartGrids implements ISmartGrids {
 
 	@Override
