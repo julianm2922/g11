@@ -1,39 +1,37 @@
 package ar.edu.ungs.prog2.smartgrids;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 //holamundo
 public class SmartGrids implements ISmartGrids {
-
+	private HashMap<Integer, Planta> plantas;
+	
 	@Override
-	public void registrarPlantaSolar(String nombre, String direccion, double capacidadMaxima,
-			String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio,
-			double superficieCubierta, int cantidadPaneles, double horasRadiacionDiaria) {
+	public void registrarPlantaSolar(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, double superficieCubierta, int cantidadPaneles, double horasRadiacionDiaria) {
 		// TODO Auto-generated method stub
-
+		plantas.put(1, new PlantaSolar(1, nombre, direccion, capacidadMaxima, true, null, fechaHoraPuestaEnFuncionamiento, horasRadiacionDiaria, horasRadiacionDiaria, cantidadPaneles, horasRadiacionDiaria));
+		
 	}
 
 	@Override
-	public void registrarPlantaEolica(String nombre, String direccion, double capacidadMaxima,
-			String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio,
-			int cantidadAerogeneradores, double alturaTorres, double velocidadMinimaViento) {
+	public void registrarPlantaEolica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, int cantidadAerogeneradores, double alturaTorres, double velocidadMinimaViento) {
 		// TODO Auto-generated method stub
-
+		plantas.put(1, new PlantaEolica(1, nombre, direccion, capacidadMaxima, true, null, fuentePrimaria, eficienciaPromedio, cantidadAerogeneradores, alturaTorres, velocidadMinimaViento));
+		
 	}
 
 	@Override
-	public void registrarPlantaHidraulica(String nombre, String direccion, double capacidadMaxima,
-			String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio,
-			int cantidadTurbinas, double capacidadEmbalse) {
+	public void registrarPlantaHidraulica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, int cantidadTurbinas, double capacidadEmbalse) {
 		// TODO Auto-generated method stub
-
+		plantas.put(1, new PlantaHidraulica(1, nombre, direccion, capacidadMaxima, true, null, fuentePrimaria, eficienciaPromedio, cantidadTurbinas, capacidadEmbalse));
+		
 	}
 
 	@Override
-	public void registrarPlantaTermica(String nombre, String direccion, double capacidadMaxima,
-			String fechaHoraPuestaEnFuncionamiento, String tipoCombustible, double objetivoEmisionesCo2PorHora,
-			double capacidadAlmacenamientoCombustible) {
+	public void registrarPlantaTermica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String tipoCombustible, double objetivoEmisionesCo2PorHora, double capacidadAlmacenamientoCombustible) {
 		// TODO Auto-generated method stub
+		plantas.put(1, new PlantaTermica(1, nombre, direccion, capacidadMaxima, true, null, tipoCombustible, objetivoEmisionesCo2PorHora, capacidadAlmacenamientoCombustible));
 
 	}
 
@@ -81,8 +79,7 @@ public class SmartGrids implements ISmartGrids {
 	}
 
 	@Override
-	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias,
-			double co2Emitido, double combustibleUtilizado) {
+	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias, double co2Emitido, double combustibleUtilizado) {
 		// TODO Auto-generated method stub
 
 	}
