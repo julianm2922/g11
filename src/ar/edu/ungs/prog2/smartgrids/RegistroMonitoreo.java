@@ -26,7 +26,7 @@ public class RegistroMonitoreo {
 		return idPlanta;
 	}
 	
-	public LocalDateTime fechaHora() {
+	public LocalDateTime getFechaHora() {
 		return fechaHora;
 	}
 	

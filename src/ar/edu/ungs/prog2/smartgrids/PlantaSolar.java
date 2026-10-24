@@ -9,7 +9,7 @@ public class PlantaSolar extends PlantaRenovable {
     private int cantidadPaneles;
     private double horasRadiacion;
 
-    public PlantaSolar(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDate fechaApertura, String fuentePrimaria, double eficienciaPromedio, double superficieCubierta, int cantidadPaneles, double horasRadiacion) {
+    public PlantaSolar(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura, String fuentePrimaria, double eficienciaPromedio, double superficieCubierta, int cantidadPaneles, double horasRadiacion) {
         super(id, nombre, direccion, capacidadMax, activo, fechaApertura, fuentePrimaria, eficienciaPromedio);
         
         this.superficieCubierta = superficieCubierta;
@@ -38,7 +38,7 @@ public class PlantaSolar extends PlantaRenovable {
 
     @Override
     public double cuotaGeneracionEsperada() {
-        // TODO: implementar
-        return 0;
+        
+        return this.capacidadMax * this.eficienciaPromedio * this.horasRadiacion / 24;
     }
 }

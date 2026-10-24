@@ -1,38 +1,77 @@
 package ar.edu.ungs.prog2.smartgrids;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 //holamundo
 public class SmartGrids implements ISmartGrids {
-	private HashMap<Integer, Planta> plantas;
-	
+	private Map<String, Planta> plantas;
+	private int proximoIdPlanta;
+	private int proximoIdRegistro;
+
+	public SmartGrids() {
+		this.plantas = new HashMap<String, Planta>();
+		this.proximoIdPlanta = 1;
+		this.proximoIdRegistro = 1;
+	}
+
 	@Override
 	public void registrarPlantaSolar(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, double superficieCubierta, int cantidadPaneles, double horasRadiacionDiaria) {
-		// TODO Auto-generated method stub
-		plantas.put(1, new PlantaSolar(1, nombre, direccion, capacidadMaxima, true, null, fechaHoraPuestaEnFuncionamiento, horasRadiacionDiaria, horasRadiacionDiaria, cantidadPaneles, horasRadiacionDiaria));
-		
+		validarNombrePlanta(nombre);
+
+		Planta planta = new PlantaSolar(proximoIdPlanta, nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, superficieCubierta, cantidadPaneles, horasRadiacionDiaria);
+		plantas.put(nombre, planta);
+		proximoIdPlanta++;
 	}
 
 	@Override
 	public void registrarPlantaEolica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, int cantidadAerogeneradores, double alturaTorres, double velocidadMinimaViento) {
-		// TODO Auto-generated method stub
-		plantas.put(1, new PlantaEolica(1, nombre, direccion, capacidadMaxima, true, null, fuentePrimaria, eficienciaPromedio, cantidadAerogeneradores, alturaTorres, velocidadMinimaViento));
-		
+		validarNombrePlanta(nombre);
+
+		Planta planta = new PlantaEolica(proximoIdPlanta, nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, cantidadAerogeneradores, alturaTorres, velocidadMinimaViento);
+		plantas.put(nombre, planta);
+		proximoIdPlanta++;
 	}
 
 	@Override
 	public void registrarPlantaHidraulica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, int cantidadTurbinas, double capacidadEmbalse) {
-		// TODO Auto-generated method stub
-		plantas.put(1, new PlantaHidraulica(1, nombre, direccion, capacidadMaxima, true, null, fuentePrimaria, eficienciaPromedio, cantidadTurbinas, capacidadEmbalse));
-		
+		validarNombrePlanta(nombre);
+
+		Planta planta = new PlantaHidraulica(proximoIdPlanta, nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, cantidadTurbinas, capacidadEmbalse);
+		plantas.put(nombre, planta);
+		proximoIdPlanta++;
 	}
 
 	@Override
 	public void registrarPlantaTermica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String tipoCombustible, double objetivoEmisionesCo2PorHora, double capacidadAlmacenamientoCombustible) {
-		// TODO Auto-generated method stub
-		plantas.put(1, new PlantaTermica(1, nombre, direccion, capacidadMaxima, true, null, tipoCombustible, objetivoEmisionesCo2PorHora, capacidadAlmacenamientoCombustible));
+		validarNombrePlanta(nombre);
+		
+		Planta planta = new PlantaTermica(proximoIdPlanta, nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), tipoCombustible, objetivoEmisionesCo2PorHora, capacidadAlmacenamientoCombustible);
+		plantas.put(nombre, planta);
+		proximoIdPlanta++;
+	}
 
+	private void validarNombrePlanta(String nombre) {
+		if (nombre == null || nombre.isEmpty())
+			throw new IllegalArgumentException("El nombre de la planta es obligatorio");
+		if (plantas.containsKey(nombre))
+			throw new IllegalArgumentException("Ya existe una planta con el nombre " + nombre);
+	}
+
+	private Planta buscarPlanta(String nombre) {
+		Planta planta = plantas.get(nombre);
+		if (planta == null)
+			throw new RuntimeException("No existe la planta " + nombre);
+		return planta;
+	}
+
+	private Planta buscarPlanta(String nombre, boolean soloActiva) {
+		Planta planta = buscarPlanta(nombre);
+		
+		if (!planta.estaActiva() && soloActiva)
+			throw new RuntimeException("La planta " + nombre + " esta inactiva");
+		return planta;
 	}
 
 	@Override
@@ -43,57 +82,75 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public double capacidadMinimaCuota(String nombre) {
-		// TODO Auto-generated method stub
-		return 0;
+		Planta planta = plantas.get(nombre);
+		
+		return planta.cuotaGeneracionEsperada();
 	}
 
 	@Override
 	public void activarPlanta(String nombre, String fechaHora) {
-		// TODO Auto-generated method stub
-
+		LocalDateTime.parse(fechaHora);
+		buscarPlanta(nombre).setActivo(true);
 	}
 
 	@Override
 	public void desactivarPlanta(String nombre, String fechaHora) {
-		// TODO Auto-generated method stub
-
+		LocalDateTime.parse(fechaHora);
+		buscarPlanta(nombre).setActivo(false);
 	}
 
 	@Override
 	public boolean estaActiva(String nombre) {
-		// TODO Auto-generated method stub
-		return false;
+		return buscarPlanta(nombre).estaActiva();
 	}
 
 	@Override
 	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias) {
-		// TODO Auto-generated method stub
-
+		Planta planta = buscarPlanta(nombre, true);
+		if (planta instanceof PlantaEolica || planta instanceof PlantaTermica)
+			throw new RuntimeException("La planta " + nombre + " requiere datos de monitoreo adicionales");
+		planta.agregarRegistro(new RegistroMonitoreo(energiaGenerada, incidencias, proximoIdRegistro, planta.getId(), LocalDateTime.parse(fechaHora)));
+		proximoIdRegistro++;
 	}
 
 	@Override
-	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias,
-			double velocidadViento) {
-		// TODO Auto-generated method stub
-
+	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias, double velocidadViento) {
+		Planta planta = buscarPlanta(nombre, true);
+		if (!(planta instanceof PlantaEolica))
+			throw new RuntimeException("La planta " + nombre + " no es eolica");
+		
+		planta.agregarRegistro(new RegistroMonitoreoEolica(energiaGenerada, incidencias, proximoIdRegistro, planta.getId(), velocidadViento, LocalDateTime.parse(fechaHora)));
+		proximoIdRegistro++;
 	}
 
 	@Override
 	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias, double co2Emitido, double combustibleUtilizado) {
-		// TODO Auto-generated method stub
-
+		Planta planta = buscarPlanta(nombre, true);
+		if (!(planta instanceof PlantaTermica))
+			throw new RuntimeException("La planta " + nombre + " no es termica");
+		planta.agregarRegistro(new RegistroMonitoreoTermica(energiaGenerada, incidencias, proximoIdRegistro, planta.getId(), co2Emitido, combustibleUtilizado, LocalDateTime.parse(fechaHora)));
+		proximoIdRegistro++;
 	}
 
 	@Override
 	public double totalGenerado(String nombre) {
+		Planta planta = plantas.get(nombre);
 		// TODO Auto-generated method stub
-		return 0;
+		return planta.calcularTotalGenerado();
 	}
 
 	@Override
 	public int[] incidenciasPorHora(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		Planta planta = plantas.get(nombre);
+		
+		int[] incidencias = new int[24];
+		for (RegistroMonitoreo reg : planta.getRegistros()) {
+			int hora = reg.getFechaHora().getHour();
+			
+			incidencias[hora] += reg.getCantidadIncidencias();
+		}
+		
+		return incidencias;
 	}
 
 	@Override

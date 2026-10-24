@@ -9,7 +9,7 @@ public class PlantaHidraulica extends PlantaRenovable {
     private int cantidadTurbinas;
     private double capacidadEmbalse;
 
-    public PlantaHidraulica(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDate fechaApertura, String fuentePrimaria, double eficienciaPromedio, int cantidadTurbinas, double capacidadEmbalse) {
+    public PlantaHidraulica(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura, String fuentePrimaria, double eficienciaPromedio, int cantidadTurbinas, double capacidadEmbalse) {
         super(id, nombre, direccion, capacidadMax, activo, fechaApertura, fuentePrimaria, eficienciaPromedio);
         this.cantidadTurbinas = cantidadTurbinas;
         this.capacidadEmbalse = capacidadEmbalse;
@@ -32,7 +32,7 @@ public class PlantaHidraulica extends PlantaRenovable {
 
     @Override
     public double cuotaGeneracionEsperada() {
-        // TODO: reemplazar por la fórmula que indique la consigna
-        return 0;
+    	
+        return capacidadMax * eficienciaPromedio;
     }
 }

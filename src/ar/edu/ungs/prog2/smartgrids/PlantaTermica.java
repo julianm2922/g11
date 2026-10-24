@@ -10,7 +10,7 @@ public class PlantaTermica extends PlantaNoRenovable {
     private double objetivoEmisionesCo2PorHora;
     private double capacidadAlmacenamientoCombustible;
 
-    public PlantaTermica(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDate fechaApertura, String tipoCombustible, double objetivoEmisionesCo2PorHora, double capacidadAlmacenamientoCombustible) {
+    public PlantaTermica(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura, String tipoCombustible, double objetivoEmisionesCo2PorHora, double capacidadAlmacenamientoCombustible) {
         super(id, nombre, direccion, capacidadMax, activo, fechaApertura);
         this.tipoCombustible = tipoCombustible;
         this.objetivoEmisionesCo2PorHora = objetivoEmisionesCo2PorHora;
@@ -38,7 +38,7 @@ public class PlantaTermica extends PlantaNoRenovable {
 
     @Override
     public double cuotaGeneracionEsperada() {
-        // TODO: implementar
-        return 0;
+       
+        return capacidadMax / 2;
     }
 }

@@ -9,7 +9,7 @@ public class PlantaEolica extends PlantaRenovable {
     private double alturaTorres;
     private double velocidadMinimaViento;
 
-    public PlantaEolica(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDate fechaApertura, String fuentePrimaria, double eficienciaPromedio, int cantidadAerogeneradores, double alturaTorres, double velocidadMinimaViento) {
+    public PlantaEolica(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura, String fuentePrimaria, double eficienciaPromedio, int cantidadAerogeneradores, double alturaTorres, double velocidadMinimaViento) {
         super(id, nombre, direccion, capacidadMax, activo, fechaApertura, fuentePrimaria, eficienciaPromedio);
         
         this.cantidadAerogeneradores = cantidadAerogeneradores;
@@ -38,7 +38,7 @@ public class PlantaEolica extends PlantaRenovable {
 
     @Override
     public double cuotaGeneracionEsperada() {
-        // TODO: implementar
-        return 0;
+        
+        return this.capacidadMax * this.eficienciaPromedio;
     }
 }
