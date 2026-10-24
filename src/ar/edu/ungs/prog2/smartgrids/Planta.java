@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -82,5 +83,19 @@ public abstract class Planta {
     	}
     	
     	return total;
+    }
+    
+    public int limpiarMonitoreosSinDatos() {
+    	int borrados = 0;
+    	Iterator<RegistroMonitoreo> it = this.registros.iterator();
+    	
+    	while(it.hasNext()) {
+    		RegistroMonitoreo reg = it.next();
+    		if (reg.getEnergiaGenerada() == 0 && reg.getCantidadIncidencias() == 0) {
+    			it.remove();
+    			borrados++;
+    		}
+    	}
+    	return borrados;
     }
 }

@@ -8,6 +8,10 @@ public class RegistroMonitoreoEolica extends RegistroMonitoreo{
 	
 	public RegistroMonitoreoEolica(double energiaGenerada, int cantidadIncidencias, int idRegistro, int idPlanta, double velocidadVientoPromedio, LocalDateTime fechaHora) {
 		super(energiaGenerada, cantidadIncidencias, idRegistro, idPlanta, fechaHora);
+
+		if (velocidadVientoPromedio < 0) {
+			throw new RuntimeException("La velocidad del viento no puede ser negativa.");
+		}
 		
 		this.velocidadVientoPromedio = velocidadVientoPromedio;
 	}

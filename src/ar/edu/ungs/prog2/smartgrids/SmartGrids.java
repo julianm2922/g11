@@ -82,7 +82,7 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public double capacidadMinimaCuota(String nombre) {
-		Planta planta = plantas.get(nombre);
+		Planta planta = buscarPlanta(nombre);
 		
 		return planta.cuotaGeneracionEsperada();
 	}
@@ -141,7 +141,7 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public int[] incidenciasPorHora(String nombre) {
-		Planta planta = plantas.get(nombre);
+		Planta planta = buscarPlanta(nombre);
 		
 		int[] incidencias = new int[24];
 		for (RegistroMonitoreo reg : planta.getRegistros()) {
@@ -180,7 +180,11 @@ public class SmartGrids implements ISmartGrids {
 	@Override
 	public int limpiarMonitoreosSinDatos() {
 		// TODO Auto-generated method stub
-		return 0;
+		int totalBorrados = 0;
+		for (Planta planta : plantas.values()) {
+			totalBorrados += planta.limpiarMonitoreosSinDatos();
+		}
+		return totalBorrados;
 	}
 
 	@Override

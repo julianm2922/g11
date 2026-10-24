@@ -10,7 +10,10 @@ public class RegistroMonitoreoTermica extends RegistroMonitoreo{
 	
 	public RegistroMonitoreoTermica(double energiaGenerada, int cantidadIncidencias, int idRegistro, int idPlanta, double cantidadCO2, double cantidadCombustibleUtilizado, LocalDateTime fechaHora) {
 		super(energiaGenerada, cantidadIncidencias, idRegistro, idPlanta, fechaHora);
-		
+
+		if (cantidadCO2 < 0 || cantidadCombustibleUtilizado < 0) {
+			throw new RuntimeException("El CO2 y el combustible utilizado no pueden ser negativos.");
+		}
 		this.cantidadCO2 = cantidadCO2;
 		this.cantidadCombustibleUtilizado = cantidadCombustibleUtilizado;
 	}

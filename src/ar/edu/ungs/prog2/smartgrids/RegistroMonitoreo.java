@@ -11,6 +11,13 @@ public class RegistroMonitoreo {
 	LocalDateTime fechaHora;
 
 	public RegistroMonitoreo(double energiaGenerada , int cantidadIncidencias, int idRegistro, int idPlanta, LocalDateTime fechaHora) {
+		if (energiaGenerada < 0 || cantidadIncidencias < 0) {
+			throw new RuntimeException("La energía generada y las incidencias no pueden ser negativas.");
+		}
+		if (fechaHora == null) {
+			throw new RuntimeException("La fecha y hora no puede ser nula.");
+		}
+		
 		this.energiaGenerada = energiaGenerada;
 		this.cantidadIncidencias = cantidadIncidencias;
 		this.idPlanta = idPlanta;
