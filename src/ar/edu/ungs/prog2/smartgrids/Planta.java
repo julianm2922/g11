@@ -22,6 +22,12 @@ public abstract class Planta {
     private LocalDateTime fechaReactivacion;
 
     public Planta(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura) {
+        validarId(id);
+        validarTextoObligatorio(nombre, "nombre");
+        validarTextoObligatorio(direccion, "direccion");
+        validarCapacidadMax(capacidadMax);
+        validarFechaApertura(fechaApertura);
+
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -90,7 +96,7 @@ public abstract class Planta {
     	if (registro.getFechaHora().isBefore(fechaApertura))
     		throw new RuntimeException("El registro no puede ser previo a la fecha de apretura de la planta");
     	
-        if (!estaInactivaEn(registro.getFechaHora())) {
+        if (estaInactivaEn(registro.getFechaHora())) {
             throw new RuntimeException("La planta no está activa en este momento.");
         }
 
@@ -176,5 +182,21 @@ public abstract class Planta {
     // por defecto el toString de LocalDateTime parece no mostrar los segundos en la hora y hace que falle el test registraYConsultaPlanes
     private String fechaISOcompleta(LocalDateTime fecha) {
     	return fecha.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+    }
+
+    private void validarId(int id) {
+    	if (id <= 0) throw new IllegalArgumentException("El id de la planta debe ser positivo");
+    }
+
+    private void validarTextoObligatorio(String texto, String campo) {
+    	if (texto == null || texto.trim().isEmpty()) throw new IllegalArgumentException("El campo " + campo + " es obligatorio");
+    }
+
+    private void validarCapacidadMax(double capacidadMax) {
+    	if (capacidadMax <= 0) throw new IllegalArgumentException("La capacidad maxima debe ser positiva");
+    }
+
+    private void validarFechaApertura(LocalDateTime fechaApertura) {
+    	if (fechaApertura == null) throw new IllegalArgumentException("La fecha de apertura es obligatoria");
     }
 }
