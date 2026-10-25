@@ -27,13 +27,7 @@ public class PlantaTermica extends PlantaNoRenovable {
         return capacidadAlmacenamientoCombustible;
     }
 
-    @Override
     public double cuotaGeneracionEsperada() {
         return capacidadMax / 2;
-    }
-    
-    @Override
-    public boolean registroCumpleCuotaGeneracionEsperada(RegistroMonitoreo reg) {
-    	return reg.getEnergiaGenerada() <= cuotaGeneracionEsperada();
     }
 }

@@ -42,7 +42,7 @@ public abstract class Planta {
     		LocalDateTime fechaHoraRegistro = reg.getFechaHora();
     		if (fechaHoraRegistro.toLocalDate().isAfter(hasta) || fechaHoraRegistro.toLocalDate().isBefore(desde)) continue;
     		
-    		if (registroCumpleCuotaGeneracionEsperada(reg)) {
+    		if (reg.satisfaceCumplimiento(this)) {
     			histograma[fechaHoraRegistro.getHour()] += 1;
     		}
     		
@@ -50,10 +50,6 @@ public abstract class Planta {
     	return histograma;
     }
 
-    public boolean registroCumpleCuotaGeneracionEsperada(RegistroMonitoreo reg) {
-    	return reg.getEnergiaGenerada() >= cuotaGeneracionEsperada();
-    }
-    
     public int getId() {
         return id;
     }
@@ -125,7 +121,7 @@ public abstract class Planta {
     public boolean cumplioCuota() {
     	boolean cumple = false;
     	for (RegistroMonitoreo reg : registros) {
-    		cumple = cumple || registroCumpleCuotaGeneracionEsperada(reg);
+    		cumple = cumple || reg.satisfaceCumplimiento(this);
      	}
     	
     	return cumple;

@@ -44,4 +44,8 @@ public class RegistroMonitoreo {
 	public int getCantidadIncidencias() {
 		return cantidadIncidencias;
 	}
+	
+	public boolean satisfaceCumplimiento(Planta planta) {
+		return getEnergiaGenerada() >= planta.cuotaGeneracionEsperada();
+	}
 }

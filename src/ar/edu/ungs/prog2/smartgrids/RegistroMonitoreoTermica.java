@@ -25,4 +25,10 @@ public class RegistroMonitoreoTermica extends RegistroMonitoreo{
 	public double getCantidadCombustibleUtilizado() {
 		return cantidadCombustibleUtilizado;
 	}
+	
+	@Override
+	public boolean satisfaceCumplimiento(Planta planta) {
+		PlantaTermica plantaTermica = (PlantaTermica) planta;
+		return getEnergiaGenerada() >= plantaTermica.cuotaGeneracionEsperada() && getCantidadCO2() < plantaTermica.getObjetivoEmisionesCo2PorHora();
+	}
 }
