@@ -11,7 +11,6 @@ import java.util.Map;
 
 public abstract class Planta {
 
-    private int id;
     private String nombre;
     private String direccion;
     protected double capacidadMax;
@@ -21,14 +20,12 @@ public abstract class Planta {
     private LocalDateTime fechaDesactivacion;
     private LocalDateTime fechaReactivacion;
 
-    public Planta(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura) {
-        validarId(id);
+    public Planta(String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura) {
         validarTextoObligatorio(nombre, "nombre");
         validarTextoObligatorio(direccion, "direccion");
         validarCapacidadMax(capacidadMax);
         validarFechaApertura(fechaApertura);
 
-        this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.capacidadMax = capacidadMax;
@@ -75,10 +72,6 @@ public abstract class Planta {
     		
     	}
     	return histograma;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getNombre() {
@@ -199,10 +192,6 @@ public abstract class Planta {
     // por defecto el toString de LocalDateTime parece no mostrar los segundos en la hora y hace que falle el test registraYConsultaPlanes
     private String fechaISOcompleta(LocalDateTime fecha) {
     	return fecha.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-    }
-
-    private void validarId(int id) {
-    	if (id <= 0) throw new IllegalArgumentException("El id de la planta debe ser positivo");
     }
 
     private void validarTextoObligatorio(String texto, String campo) {

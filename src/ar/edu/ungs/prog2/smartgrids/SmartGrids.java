@@ -10,49 +10,41 @@ import java.util.Map;
 //holamundo
 public class SmartGrids implements ISmartGrids {
 	private Map<String, Planta> plantas;
-	private int proximoIdPlanta;
-	private int proximoIdRegistro;
 
 	public SmartGrids() {
 		this.plantas = new LinkedHashMap<String, Planta>();
-		this.proximoIdPlanta = 1;
-		this.proximoIdRegistro = 1;
 	}
 
 	@Override
 	public void registrarPlantaSolar(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, double superficieCubierta, int cantidadPaneles, double horasRadiacionDiaria) {
 		validarNombrePlanta(nombre);
 
-		Planta planta = new PlantaSolar(proximoIdPlanta, nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, superficieCubierta, cantidadPaneles, horasRadiacionDiaria);
+		Planta planta = new PlantaSolar(nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, superficieCubierta, cantidadPaneles, horasRadiacionDiaria);
 		plantas.put(nombre, planta);
-		proximoIdPlanta++;
 	}
 
 	@Override
 	public void registrarPlantaEolica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, int cantidadAerogeneradores, double alturaTorres, double velocidadMinimaViento) {
 		validarNombrePlanta(nombre);
 
-		Planta planta = new PlantaEolica(proximoIdPlanta, nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, cantidadAerogeneradores, alturaTorres, velocidadMinimaViento);
+		Planta planta = new PlantaEolica(nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, cantidadAerogeneradores, alturaTorres, velocidadMinimaViento);
 		plantas.put(nombre, planta);
-		proximoIdPlanta++;
 	}
 
 	@Override
 	public void registrarPlantaHidraulica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, int cantidadTurbinas, double capacidadEmbalse) {
 		validarNombrePlanta(nombre);
 
-		Planta planta = new PlantaHidraulica(proximoIdPlanta, nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, cantidadTurbinas, capacidadEmbalse);
+		Planta planta = new PlantaHidraulica(nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), fuentePrimaria, eficienciaPromedio, cantidadTurbinas, capacidadEmbalse);
 		plantas.put(nombre, planta);
-		proximoIdPlanta++;
 	}
 
 	@Override
 	public void registrarPlantaTermica(String nombre, String direccion, double capacidadMaxima, String fechaHoraPuestaEnFuncionamiento, String tipoCombustible, double objetivoEmisionesCo2PorHora, double capacidadAlmacenamientoCombustible) {
 		validarNombrePlanta(nombre);
 		
-		Planta planta = new PlantaTermica(proximoIdPlanta, nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), tipoCombustible, objetivoEmisionesCo2PorHora, capacidadAlmacenamientoCombustible);
+		Planta planta = new PlantaTermica(nombre, direccion, capacidadMaxima, true, LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento), tipoCombustible, objetivoEmisionesCo2PorHora, capacidadAlmacenamientoCombustible);
 		plantas.put(nombre, planta);
-		proximoIdPlanta++;
 	}
 
 	@Override
@@ -94,8 +86,7 @@ public class SmartGrids implements ISmartGrids {
 		Planta planta = buscarPlanta(nombre, true);
 		if (planta instanceof PlantaEolica || planta instanceof PlantaTermica)
 			throw new RuntimeException("La planta " + nombre + " requiere datos de monitoreo adicionales");
-		planta.agregarRegistro(new RegistroMonitoreo(energiaGenerada, incidencias, proximoIdRegistro, planta.getId(), LocalDateTime.parse(fechaHora)));
-		proximoIdRegistro++;
+		planta.agregarRegistro(new RegistroMonitoreo(energiaGenerada, incidencias, LocalDateTime.parse(fechaHora)));
 	}
 
 	@Override
@@ -104,8 +95,7 @@ public class SmartGrids implements ISmartGrids {
 		if (!(planta instanceof PlantaEolica))
 			throw new RuntimeException("La planta " + nombre + " no es eolica");
 		
-		planta.agregarRegistro(new RegistroMonitoreoEolica(energiaGenerada, incidencias, proximoIdRegistro, planta.getId(), velocidadViento, LocalDateTime.parse(fechaHora)));
-		proximoIdRegistro++;
+		planta.agregarRegistro(new RegistroMonitoreoEolica(energiaGenerada, incidencias, velocidadViento, LocalDateTime.parse(fechaHora)));
 	}
 
 	@Override
@@ -113,8 +103,7 @@ public class SmartGrids implements ISmartGrids {
 		Planta planta = buscarPlanta(nombre, true);
 		if (!(planta instanceof PlantaTermica))
 			throw new RuntimeException("La planta " + nombre + " no es termica");
-		planta.agregarRegistro(new RegistroMonitoreoTermica(energiaGenerada, incidencias, proximoIdRegistro, planta.getId(), co2Emitido, combustibleUtilizado, LocalDateTime.parse(fechaHora)));
-		proximoIdRegistro++;
+		planta.agregarRegistro(new RegistroMonitoreoTermica(energiaGenerada, incidencias, co2Emitido, combustibleUtilizado, LocalDateTime.parse(fechaHora)));
 	}
 
 	@Override

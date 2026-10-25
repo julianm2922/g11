@@ -8,8 +8,8 @@ public class PlantaTermica extends PlantaNoRenovable {
     private double objetivoEmisionesCo2PorHora;
     private double capacidadAlmacenamientoCombustible;
 
-    public PlantaTermica(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura, String tipoCombustible, double objetivoEmisionesCo2PorHora, double capacidadAlmacenamientoCombustible) {
-        super(id, nombre, direccion, capacidadMax, activo, fechaApertura);
+    public PlantaTermica(String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura, String tipoCombustible, double objetivoEmisionesCo2PorHora, double capacidadAlmacenamientoCombustible) {
+        super(nombre, direccion, capacidadMax, activo, fechaApertura);
         this.tipoCombustible = tipoCombustible;
         this.objetivoEmisionesCo2PorHora = objetivoEmisionesCo2PorHora;
         this.capacidadAlmacenamientoCombustible = capacidadAlmacenamientoCombustible;

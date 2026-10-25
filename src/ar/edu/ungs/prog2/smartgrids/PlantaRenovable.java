@@ -7,8 +7,8 @@ public abstract class PlantaRenovable extends Planta {
     private String fuentePrimaria;
     protected double eficienciaPromedio;
 
-    public PlantaRenovable(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura, String fuentePrimaria, double eficienciaPromedio) {
-        super(id, nombre, direccion, capacidadMax, activo, fechaApertura);
+    public PlantaRenovable(String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura, String fuentePrimaria, double eficienciaPromedio) {
+        super(nombre, direccion, capacidadMax, activo, fechaApertura);
         this.fuentePrimaria = fuentePrimaria;
         this.eficienciaPromedio = eficienciaPromedio;
     }
