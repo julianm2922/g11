@@ -15,24 +15,12 @@ public class PlantaEolica extends PlantaRenovable {
         this.velocidadMinimaViento = velocidadMinimaViento;
     }
 
-    public int getCantidadAerogeneradores() {
-        return cantidadAerogeneradores;
-    }
-
-    public double getAlturaTorres() {
-        return alturaTorres;
-    }
-
-    public double getVelocidadMinimaViento() {
-        return velocidadMinimaViento;
-    }
-
     @Override
     public double cuotaGeneracionEsperada() {
         
         return this.capacidadMax * this.eficienciaPromedio;
     }
-    
+
     @Override
     public String toString() {
     	return new StringBuilder(super.toString())
@@ -49,7 +37,19 @@ public class PlantaEolica extends PlantaRenovable {
     public String reporteOtrosIncumplimientos() {
     	return reporteHorasSinVelocidadMinima();
     }
-    
+
+    public int getCantidadAerogeneradores() {
+        return cantidadAerogeneradores;
+    }
+
+    public double getAlturaTorres() {
+        return alturaTorres;
+    }
+
+    public double getVelocidadMinimaViento() {
+        return velocidadMinimaViento;
+    }
+
     /** METODOS PRIVADOS */
 
     // interpretamos que en cada hora sin cumplimiento deberia ir la maxima velocidad alcanzada (la consigna no lo especifica)

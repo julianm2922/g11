@@ -13,14 +13,6 @@ public class PlantaHidraulica extends PlantaRenovable {
         this.capacidadEmbalse = capacidadEmbalse;
     }
 
-    public int getCantidadTurbinas() {
-        return cantidadTurbinas;
-    }
-
-    public double getCapacidadEmbalse() {
-        return capacidadEmbalse;
-    }
-
     @Override
     public double cuotaGeneracionEsperada() {
     	
@@ -35,5 +27,13 @@ public class PlantaHidraulica extends PlantaRenovable {
     		.append(" | Capacidad del embalse: ")
     		.append(capacidadEmbalse)
     		.toString();
+    }
+
+    public int getCantidadTurbinas() {
+        return cantidadTurbinas;
+    }
+
+    public double getCapacidadEmbalse() {
+        return capacidadEmbalse;
     }
 }

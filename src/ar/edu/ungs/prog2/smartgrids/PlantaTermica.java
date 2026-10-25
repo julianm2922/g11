@@ -15,18 +15,7 @@ public class PlantaTermica extends PlantaNoRenovable {
         this.capacidadAlmacenamientoCombustible = capacidadAlmacenamientoCombustible;
     }
 
-    public String getTipoCombustible() {
-        return tipoCombustible;
-    }
-
-    public double getObjetivoEmisionesCo2PorHora() {
-        return objetivoEmisionesCo2PorHora;
-    }
-
-    public double getCapacidadAlmacenamientoCombustible() {
-        return capacidadAlmacenamientoCombustible;
-    }
-
+    @Override
     public double cuotaGeneracionEsperada() {
         return capacidadMax / 2;
     }
@@ -41,5 +30,17 @@ public class PlantaTermica extends PlantaNoRenovable {
     		.append(" | Almacenamiento de combustible: ")
     		.append(capacidadAlmacenamientoCombustible)
     		.toString();
+    }
+
+    public String getTipoCombustible() {
+        return tipoCombustible;
+    }
+
+    public double getObjetivoEmisionesCo2PorHora() {
+        return objetivoEmisionesCo2PorHora;
+    }
+
+    public double getCapacidadAlmacenamientoCombustible() {
+        return capacidadAlmacenamientoCombustible;
     }
 }

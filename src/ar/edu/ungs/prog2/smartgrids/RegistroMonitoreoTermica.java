@@ -17,15 +17,7 @@ public class RegistroMonitoreoTermica extends RegistroMonitoreo{
 		this.cantidadCO2 = cantidadCO2;
 		this.cantidadCombustibleUtilizado = cantidadCombustibleUtilizado;
 	}
-	
-	public double getCantidadCO2() {
-		return cantidadCO2;
-	}
-	
-	public double getCantidadCombustibleUtilizado() {
-		return cantidadCombustibleUtilizado;
-	}
-	
+
 	@Override
 	public boolean satisfaceCumplimiento(Planta planta) {
 		PlantaTermica plantaTermica = (PlantaTermica) planta;
@@ -40,5 +32,13 @@ public class RegistroMonitoreoTermica extends RegistroMonitoreo{
 			.append(" | Combustible utilizado: ")
 			.append(cantidadCombustibleUtilizado)
 			.toString();
+	}
+
+	public double getCantidadCO2() {
+		return cantidadCO2;
+	}
+
+	public double getCantidadCombustibleUtilizado() {
+		return cantidadCombustibleUtilizado;
 	}
 }

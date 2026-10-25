@@ -15,10 +15,6 @@ public class RegistroMonitoreoEolica extends RegistroMonitoreo{
 		
 		this.velocidadVientoPromedio = velocidadVientoPromedio;
 	}
-	
-	public double getVelocidadVientoPromedio() {
-		return velocidadVientoPromedio;
-	}
 
 	@Override
 	public String toString() {
@@ -26,5 +22,9 @@ public class RegistroMonitoreoEolica extends RegistroMonitoreo{
 			.append(" | Viento promedio: ")
 			.append(velocidadVientoPromedio)
 			.toString();
+	}
+
+	public double getVelocidadVientoPromedio() {
+		return velocidadVientoPromedio;
 	}
 }

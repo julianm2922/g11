@@ -13,14 +13,6 @@ public abstract class PlantaRenovable extends Planta {
         this.eficienciaPromedio = eficienciaPromedio;
     }
 
-    public String getFuentePrimaria() {
-        return fuentePrimaria;
-    }
-
-    public double getEficienciaPromedio() {
-        return eficienciaPromedio;
-    }
-    
     @Override
     public boolean esRenovable() {
     	return true;
@@ -34,5 +26,13 @@ public abstract class PlantaRenovable extends Planta {
     		.append(" | Eficiencia promedio: ")
     		.append(eficienciaPromedio)
     		.toString();
+    }
+
+    public String getFuentePrimaria() {
+        return fuentePrimaria;
+    }
+
+    public double getEficienciaPromedio() {
+        return eficienciaPromedio;
     }
 }

@@ -39,6 +39,25 @@ public abstract class Planta {
 
     public abstract double cuotaGeneracionEsperada();
 
+    public abstract boolean esRenovable();
+
+    @Override
+    public String toString() {
+    	StringBuilder sb = new StringBuilder(resumen());
+    	sb.append("\n\tDireccion: ")
+    	  .append(direccion)
+    	  .append(" | Capacidad maxima: ")
+    	  .append(capacidadMax);
+
+    	if (fechaDesactivacion != null)
+    		sb.append("\n\tUltima inactividad: desde ")
+    		  .append(fechaISOcompleta(fechaDesactivacion))
+    		  .append(" hasta ")
+    		  .append(fechaReactivacion == null ? "-" : fechaISOcompleta(fechaReactivacion));
+
+    	return sb.toString();
+    }
+
     public int[] generarHistogramaCumplimiento(String fechaDesde, String fechaHasta) {
     	LocalDate desde = LocalDate.parse(fechaDesde);
     	LocalDate hasta = LocalDate.parse(fechaHasta);
@@ -57,8 +76,6 @@ public abstract class Planta {
     	}
     	return histograma;
     }
-    
-    public abstract boolean esRenovable();
 
     public int getId() {
         return id;
@@ -107,7 +124,7 @@ public abstract class Planta {
     	
         registros.add(registro);
     }
-    
+
     public double calcularTotalGenerado() {
     	double total = 0;
     	for (RegistroMonitoreo reg : this.registros) {
@@ -116,7 +133,7 @@ public abstract class Planta {
     	
     	return total;
     }
-    
+
     public int limpiarMonitoreosSinDatos() {
     	int borrados = 0;
     	Iterator<RegistroMonitoreo> it = this.registros.iterator();
@@ -140,7 +157,7 @@ public abstract class Planta {
     	
     	return cumple;
     }
-    
+
     public String resumen() {
     	return new StringBuilder(nombre)
 			.append(" (").append(activo ? "ACTIVA" : "INACTIVA").append("): ")
@@ -148,23 +165,6 @@ public abstract class Planta {
 			.toString();
     }
 
-    @Override
-    public String toString() {
-    	StringBuilder sb = new StringBuilder(resumen());
-    	sb.append("\n\tDireccion: ")
-    	  .append(direccion)
-    	  .append(" | Capacidad maxima: ")
-    	  .append(capacidadMax);
-
-    	if (fechaDesactivacion != null)
-    		sb.append("\n\tUltima inactividad: desde ")
-    		  .append(fechaISOcompleta(fechaDesactivacion))
-    		  .append(" hasta ")
-    		  .append(fechaReactivacion == null ? "-" : fechaISOcompleta(fechaReactivacion));
-
-    	return sb.toString();
-    }
-    
     public void setActivo(boolean activo, LocalDateTime fechaHora) {
     	if (fechaHora.isBefore(this.fechaApertura)) {
     		throw new RuntimeException("La fecha no puede ser anterior a la fecha de apertura");
@@ -178,6 +178,7 @@ public abstract class Planta {
     		this.fechaReactivacion = fechaHora;
     	}
     }
+
     public boolean estaInactivaEn(LocalDateTime fechaHora) {
     	if (this.fechaDesactivacion == null || fechaHora.isBefore(this.fechaDesactivacion)) {
     		return false;
@@ -187,7 +188,7 @@ public abstract class Planta {
     	}
     	return false;
     }
-    
+
     // la funcion existe para PlantaEolica, que requiere reportar horas sin velocidad mínima. se agrega aca y con un nombre genérico para no depender de "instanceof" o de algun otro "truco"
     public String reporteOtrosIncumplimientos() {
     	return "";

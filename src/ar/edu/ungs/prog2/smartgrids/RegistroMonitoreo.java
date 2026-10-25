@@ -25,30 +25,6 @@ public class RegistroMonitoreo {
 		this.idRegistro = idRegistro;
 		this.fechaHora = fechaHora;
 	}
-	
-	public int getIdRegistro() {
-		return idRegistro;
-	}
-
-	public int getIdPlanta() {
-		return idPlanta;
-	}
-	
-	public LocalDateTime getFechaHora() {
-		return fechaHora;
-	}
-	
-	public double getEnergiaGenerada() {
-		return energiaGenerada;
-	}
-	
-	public int getCantidadIncidencias() {
-		return cantidadIncidencias;
-	}
-	
-	public boolean satisfaceCumplimiento(Planta planta) {
-		return getEnergiaGenerada() >= planta.cuotaGeneracionEsperada();
-	}
 
 	@Override
 	public String toString() {
@@ -59,5 +35,29 @@ public class RegistroMonitoreo {
 			.append(" | Incidencias: ")
 			.append(cantidadIncidencias)
 			.toString();
+	}
+
+	public int getIdRegistro() {
+		return idRegistro;
+	}
+
+	public int getIdPlanta() {
+		return idPlanta;
+	}
+
+	public LocalDateTime getFechaHora() {
+		return fechaHora;
+	}
+
+	public double getEnergiaGenerada() {
+		return energiaGenerada;
+	}
+
+	public int getCantidadIncidencias() {
+		return cantidadIncidencias;
+	}
+
+	public boolean satisfaceCumplimiento(Planta planta) {
+		return getEnergiaGenerada() >= planta.cuotaGeneracionEsperada();
 	}
 }

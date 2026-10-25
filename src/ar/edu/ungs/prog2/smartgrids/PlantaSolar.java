@@ -15,18 +15,6 @@ public class PlantaSolar extends PlantaRenovable {
         this.horasRadiacion = horasRadiacion;
     }
 
-    public double getSuperficieCubierta() {
-        return superficieCubierta;
-    }
-
-    public int getCantidadPaneles() {
-        return cantidadPaneles;
-    }
-
-    public double getHorasRadiacion() {
-        return horasRadiacion;
-    }
-
     @Override
     public double cuotaGeneracionEsperada() {
         
@@ -43,5 +31,17 @@ public class PlantaSolar extends PlantaRenovable {
     		.append(" | Horas de radiacion: ")
     		.append(horasRadiacion)
     		.toString();
+    }
+
+    public double getSuperficieCubierta() {
+        return superficieCubierta;
+    }
+
+    public int getCantidadPaneles() {
+        return cantidadPaneles;
+    }
+
+    public double getHorasRadiacion() {
+        return horasRadiacion;
     }
 }
