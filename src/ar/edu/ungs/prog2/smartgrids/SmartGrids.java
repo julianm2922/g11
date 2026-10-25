@@ -60,7 +60,7 @@ public class SmartGrids implements ISmartGrids {
 		ArrayList<String> lista = new ArrayList<>();
 		for (Map.Entry<String, Planta> tupla : plantas.entrySet()) {
 			Planta planta = tupla.getValue();
-			lista.add(planta.toString());
+			lista.add(planta.resumen());
 		}
 		return lista;
 	}
@@ -234,7 +234,25 @@ public class SmartGrids implements ISmartGrids {
 		return inactivas;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("SmartGrids: ");
+		sb.append(plantas.size()).append(" plantas registradas");
+		for (Planta planta : plantas.values()) {
+			sb.append("\n\n").append(planta.toString());
+			agregarRegistros(sb, planta);
+		}
+		return sb.toString();
+	}
+
 	/** METODOS PRIVADOS */
+
+	private void agregarRegistros(StringBuilder sb, Planta planta) {
+		sb.append("\n\tRegistros (").append(planta.getRegistros().size()).append("):");
+		for (RegistroMonitoreo reg : planta.getRegistros()) {
+			sb.append("\n\t\t").append(reg.toString());
+		}
+	}
 
 	private void validarNombrePlanta(String nombre) {
 		if (nombre == null || nombre.isEmpty())

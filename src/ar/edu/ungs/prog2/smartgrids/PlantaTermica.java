@@ -30,4 +30,16 @@ public class PlantaTermica extends PlantaNoRenovable {
     public double cuotaGeneracionEsperada() {
         return capacidadMax / 2;
     }
+
+    @Override
+    public String toString() {
+    	return new StringBuilder(super.toString())
+    		.append("\n\tTermica | Combustible: ")
+    		.append(tipoCombustible)
+    		.append(" | Objetivo CO2 por hora: ")
+    		.append(objetivoEmisionesCo2PorHora)
+    		.append(" | Almacenamiento de combustible: ")
+    		.append(capacidadAlmacenamientoCombustible)
+    		.toString();
+    }
 }

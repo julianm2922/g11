@@ -25,4 +25,14 @@ public abstract class PlantaRenovable extends Planta {
     public boolean esRenovable() {
     	return true;
     }
+
+    @Override
+    public String toString() {
+    	return new StringBuilder(super.toString())
+    		.append("\n\tFuente primaria: ")
+    		.append(fuentePrimaria)
+    		.append(" | Eficiencia promedio: ")
+    		.append(eficienciaPromedio)
+    		.toString();
+    }
 }

@@ -141,12 +141,28 @@ public abstract class Planta {
     	return cumple;
     }
     
-    @Override
-    public String toString() {
+    public String resumen() {
     	return new StringBuilder(nombre)
 			.append(" (").append(activo ? "ACTIVA" : "INACTIVA").append("): ")
 			.append(fechaISOcompleta(fechaApertura))
 			.toString();
+    }
+
+    @Override
+    public String toString() {
+    	StringBuilder sb = new StringBuilder(resumen());
+    	sb.append("\n\tDireccion: ")
+    	  .append(direccion)
+    	  .append(" | Capacidad maxima: ")
+    	  .append(capacidadMax);
+
+    	if (fechaDesactivacion != null)
+    		sb.append("\n\tUltima inactividad: desde ")
+    		  .append(fechaISOcompleta(fechaDesactivacion))
+    		  .append(" hasta ")
+    		  .append(fechaReactivacion == null ? "-" : fechaISOcompleta(fechaReactivacion));
+
+    	return sb.toString();
     }
     
     public void setActivo(boolean activo, LocalDateTime fechaHora) {

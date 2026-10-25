@@ -26,4 +26,14 @@ public class PlantaHidraulica extends PlantaRenovable {
     	
         return capacidadMax * eficienciaPromedio;
     }
+
+    @Override
+    public String toString() {
+    	return new StringBuilder(super.toString())
+    		.append("\n\tHidraulica | Turbinas: ")
+    		.append(cantidadTurbinas)
+    		.append(" | Capacidad del embalse: ")
+    		.append(capacidadEmbalse)
+    		.toString();
+    }
 }

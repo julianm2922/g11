@@ -1,6 +1,7 @@
 package ar.edu.ungs.prog2.smartgrids;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class RegistroMonitoreo {
 
@@ -47,5 +48,16 @@ public class RegistroMonitoreo {
 	
 	public boolean satisfaceCumplimiento(Planta planta) {
 		return getEnergiaGenerada() >= planta.cuotaGeneracionEsperada();
+	}
+
+	@Override
+	public String toString() {
+		return new StringBuilder("[")
+			.append(fechaHora.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+			.append("] Energia: ")
+			.append(energiaGenerada)
+			.append(" | Incidencias: ")
+			.append(cantidadIncidencias)
+			.toString();
 	}
 }

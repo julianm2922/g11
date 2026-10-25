@@ -19,4 +19,12 @@ public class RegistroMonitoreoEolica extends RegistroMonitoreo{
 	public double getVelocidadVientoPromedio() {
 		return velocidadVientoPromedio;
 	}
+
+	@Override
+	public String toString() {
+		return new StringBuilder(super.toString())
+			.append(" | Viento promedio: ")
+			.append(velocidadVientoPromedio)
+			.toString();
+	}
 }

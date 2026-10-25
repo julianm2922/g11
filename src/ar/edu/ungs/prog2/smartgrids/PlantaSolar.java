@@ -32,4 +32,16 @@ public class PlantaSolar extends PlantaRenovable {
         
         return this.capacidadMax * this.eficienciaPromedio * this.horasRadiacion / 24;
     }
+
+    @Override
+    public String toString() {
+    	return new StringBuilder(super.toString())
+    		.append("\n\tSolar | Superficie cubierta: ")
+    		.append(superficieCubierta)
+    		.append(" | Paneles: ")
+    		.append(cantidadPaneles)
+    		.append(" | Horas de radiacion: ")
+    		.append(horasRadiacion)
+    		.toString();
+    }
 }

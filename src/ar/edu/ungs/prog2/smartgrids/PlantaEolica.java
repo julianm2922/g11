@@ -34,6 +34,18 @@ public class PlantaEolica extends PlantaRenovable {
     }
     
     @Override
+    public String toString() {
+    	return new StringBuilder(super.toString())
+    		.append("\n\tEolica | Aerogeneradores: ")
+    		.append(cantidadAerogeneradores)
+    		.append(" | Altura de torres: ")
+    		.append(alturaTorres)
+    		.append(" | Velocidad minima de viento: ")
+    		.append(velocidadMinimaViento)
+    		.toString();
+    }
+
+    @Override
     public String reporteOtrosIncumplimientos() {
     	return reporteHorasSinVelocidadMinima();
     }
