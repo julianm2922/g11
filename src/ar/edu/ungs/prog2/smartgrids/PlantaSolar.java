@@ -1,8 +1,6 @@
 package ar.edu.ungs.prog2.smartgrids;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 public class PlantaSolar extends PlantaRenovable {
     private double superficieCubierta;
@@ -27,13 +25,6 @@ public class PlantaSolar extends PlantaRenovable {
 
     public double getHorasRadiacion() {
         return horasRadiacion;
-    }
-
-    @Override
-    public HashMap<LocalDate, HashMap<LocalDateTime, Double>> generarHistogramaCumplimiento(LocalDate fechaInicio, LocalDate fechaFin) {
-    	HashMap<LocalDate, HashMap<LocalDateTime, Double>> histograma = new HashMap<LocalDate, HashMap<LocalDateTime, Double>>();
-        // TODO: implementar
-        return histograma;
     }
 
     @Override

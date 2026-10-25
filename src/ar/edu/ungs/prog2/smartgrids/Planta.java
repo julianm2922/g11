@@ -2,6 +2,7 @@ package ar.edu.ungs.prog2.smartgrids;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,8 +31,29 @@ public abstract class Planta {
 
     public abstract double cuotaGeneracionEsperada();
 
-    public abstract HashMap<LocalDate, HashMap<LocalDateTime, Double>> generarHistogramaCumplimiento(LocalDate fechaInicio, LocalDate fechaFin);
+    public int[] generarHistogramaCumplimiento(String fechaDesde, String fechaHasta) {
+    	LocalDate desde = LocalDate.parse(fechaDesde);
+    	LocalDate hasta = LocalDate.parse(fechaHasta);
+    	if (desde.isAfter(hasta)) throw new RuntimeException("La fecha desde no puede ser posterior a la fecha hasta.");
+    	
+    	int[] histograma = new int[24];
+    	
+    	for (RegistroMonitoreo reg : registros) {
+    		LocalDateTime fechaHoraRegistro = reg.getFechaHora();
+    		if (fechaHoraRegistro.toLocalDate().isAfter(hasta) || fechaHoraRegistro.toLocalDate().isBefore(desde)) continue;
+    		
+    		if (registroCumpleCuotaGeneracionEsperada(reg)) {
+    			histograma[fechaHoraRegistro.getHour()] += 1;
+    		}
+    		
+    	}
+    	return histograma;
+    }
 
+    public boolean registroCumpleCuotaGeneracionEsperada(RegistroMonitoreo reg) {
+    	return reg.getEnergiaGenerada() >= cuotaGeneracionEsperada();
+    }
+    
     public int getId() {
         return id;
     }
@@ -98,13 +120,24 @@ public abstract class Planta {
     	}
     	return borrados;
     }
-    
-    public boolean cumpleCuota() {
-    	return false;
+
+    // verifica si alguna vez se llegó a cumplir la cuota
+    public boolean cumplioCuota() {
+    	boolean cumple = false;
+    	for (RegistroMonitoreo reg : registros) {
+    		cumple = cumple || registroCumpleCuotaGeneracionEsperada(reg);
+     	}
+    	
+    	return cumple;
     }
     
     @Override
     public String toString() {
-    	return nombre + " (" + (activo ? "ACTIVA" : "INCATIVA") + "): " + fechaApertura.toString();
+    	return nombre + " (" + (activo ? "ACTIVA" : "INACTIVA") + "): " + fechaISOcompleta(fechaApertura);
+    }
+    
+    // por defecto el toString de LocalDateTime parece no mostrar los segundos en la hora y hace que falle el test registraYConsultaPlanes
+    private String fechaISOcompleta(LocalDateTime fecha) {
+    	return fecha.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
     }
 }

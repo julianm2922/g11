@@ -1,8 +1,10 @@
 package ar.edu.ungs.prog2.smartgrids;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 //holamundo
@@ -12,7 +14,7 @@ public class SmartGrids implements ISmartGrids {
 	private int proximoIdRegistro;
 
 	public SmartGrids() {
-		this.plantas = new HashMap<String, Planta>();
+		this.plantas = new LinkedHashMap<String, Planta>();
 		this.proximoIdPlanta = 1;
 		this.proximoIdRegistro = 1;
 	}
@@ -78,7 +80,10 @@ public class SmartGrids implements ISmartGrids {
 	@Override
 	public List<String> consultarPlantas() {
 		ArrayList<String> lista = new ArrayList<>();
-		lista.addAll(plantas.keySet());
+		for (Map.Entry<String, Planta> tupla : plantas.entrySet()) {
+			Planta planta = tupla.getValue();
+			lista.add(planta.toString());
+		}
 		return lista;
 	}
 
@@ -157,8 +162,9 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public int[] histogramaCumplimiento(String nombre, String fechaDesde, String fechaHasta) {
-		// TODO Auto-generated method stub
-		return null;
+		Planta planta = plantas.get(nombre);
+		
+		return planta.generarHistogramaCumplimiento(fechaDesde, fechaHasta);
 	}
 
 	@Override
@@ -174,11 +180,11 @@ public class SmartGrids implements ISmartGrids {
 		for (Map.Entry<String, Planta> tupla : plantas.entrySet()) {
 			Planta planta = tupla.getValue();
 			
-			if (!planta.cumpleCuota()) {
+			if (!planta.cumplioCuota()) {
 				nombresPlantas.add(tupla.getKey());
 			}
 		}
-		return null;
+		return nombresPlantas;
 	}
 
 	@Override

@@ -1,8 +1,6 @@
 package ar.edu.ungs.prog2.smartgrids;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 public class PlantaTermica extends PlantaNoRenovable {
 
@@ -30,15 +28,12 @@ public class PlantaTermica extends PlantaNoRenovable {
     }
 
     @Override
-    public HashMap<LocalDate, HashMap<LocalDateTime, Double>> generarHistogramaCumplimiento(LocalDate fechaInicio, LocalDate fechaFin) {
-        HashMap<LocalDate, HashMap<LocalDateTime, Double>> histograma = new HashMap<>();
-        // TODO: implementar
-        return histograma;
-    }
-
-    @Override
     public double cuotaGeneracionEsperada() {
-       
         return capacidadMax / 2;
+    }
+    
+    @Override
+    public boolean registroCumpleCuotaGeneracionEsperada(RegistroMonitoreo reg) {
+    	return reg.getEnergiaGenerada() <= cuotaGeneracionEsperada();
     }
 }

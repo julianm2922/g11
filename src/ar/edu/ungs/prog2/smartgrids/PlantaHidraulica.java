@@ -1,8 +1,6 @@
 package ar.edu.ungs.prog2.smartgrids;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 public class PlantaHidraulica extends PlantaRenovable {
 
@@ -21,13 +19,6 @@ public class PlantaHidraulica extends PlantaRenovable {
 
     public double getCapacidadEmbalse() {
         return capacidadEmbalse;
-    }
-
-    @Override
-    public HashMap<LocalDate, HashMap<LocalDateTime, Double>> generarHistogramaCumplimiento(LocalDate fechaInicio, LocalDate fechaFin) {
-        HashMap<LocalDate, HashMap<LocalDateTime, Double>> histograma = new HashMap<>();
-        // TODO: implementar según la consigna (recorrer getMonitoreo() y filtrar por fechas)
-        return histograma;
     }
 
     @Override

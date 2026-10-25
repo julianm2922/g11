@@ -1,8 +1,6 @@
 package ar.edu.ungs.prog2.smartgrids;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 
 public class PlantaEolica extends PlantaRenovable {
     private int cantidadAerogeneradores;
@@ -27,13 +25,6 @@ public class PlantaEolica extends PlantaRenovable {
 
     public double getVelocidadMinimaViento() {
         return velocidadMinimaViento;
-    }
-
-    @Override
-    public HashMap<LocalDate, HashMap<LocalDateTime, Double>> generarHistogramaCumplimiento(LocalDate fechaInicio, LocalDate fechaFin) {
-        HashMap<LocalDate, HashMap<LocalDateTime, Double>> histograma = new HashMap<>();
-        // TODO: implementar
-        return histograma;
     }
 
     @Override
