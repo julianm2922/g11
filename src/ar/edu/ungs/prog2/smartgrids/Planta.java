@@ -98,4 +98,13 @@ public abstract class Planta {
     	}
     	return borrados;
     }
+    
+    public boolean cumpleCuota() {
+    	return false;
+    }
+    
+    @Override
+    public String toString() {
+    	return nombre + " (" + (activo ? "ACTIVA" : "INCATIVA") + "): " + fechaApertura.toString();
+    }
 }

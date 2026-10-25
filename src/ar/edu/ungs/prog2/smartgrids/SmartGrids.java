@@ -1,6 +1,7 @@
 package ar.edu.ungs.prog2.smartgrids;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,8 +77,9 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public List<String> consultarPlantas() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> lista = new ArrayList<>();
+		lista.addAll(plantas.keySet());
+		return lista;
 	}
 
 	@Override
@@ -167,7 +169,15 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public List<String> plantasQueNuncaCumplieronCuota() {
-		// TODO Auto-generated method stub
+		ArrayList<String> nombresPlantas = new ArrayList<String>();
+		
+		for (Map.Entry<String, Planta> tupla : plantas.entrySet()) {
+			Planta planta = tupla.getValue();
+			
+			if (!planta.cumpleCuota()) {
+				nombresPlantas.add(tupla.getKey());
+			}
+		}
 		return null;
 	}
 
