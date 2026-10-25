@@ -51,6 +51,8 @@ public class CodigoCliente {
         imprimirEstado("Final", sistema);
     }
 
+    /** METODOS PRIVADOS */
+
     private static void imprimirEstado(String momento, ISmartGrids sistema) {
         System.out.println("\n--- " + momento + " INICIO ---");
         System.out.println(sistema.toString());

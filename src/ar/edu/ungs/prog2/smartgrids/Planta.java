@@ -90,6 +90,10 @@ public abstract class Planta {
     	if (registro.getFechaHora().isBefore(fechaApertura))
     		throw new RuntimeException("El registro no puede ser previo a la fecha de apretura de la planta");
     	
+        if (!estaInactivaEn(registro.getFechaHora())) {
+            throw new RuntimeException("La planta no está activa en este momento.");
+        }
+
     	for (RegistroMonitoreo reg : this.registros) {
     		if (reg.getFechaHora().equals(registro.getFechaHora()))
     			throw new RuntimeException("Ya existe un registro para esa hora y fecha.");
@@ -139,11 +143,6 @@ public abstract class Planta {
 			.toString();
     }
     
-    // por defecto el toString de LocalDateTime parece no mostrar los segundos en la hora y hace que falle el test registraYConsultaPlanes
-    private String fechaISOcompleta(LocalDateTime fecha) {
-    	return fecha.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-    }
-    
     public void setActivo(boolean activo, LocalDateTime fechaHora) {
     	if (fechaHora.isBefore(this.fechaApertura)) {
     		throw new RuntimeException("La fecha no puede ser anterior a la fecha de apertura");
@@ -170,5 +169,12 @@ public abstract class Planta {
     // la funcion existe para PlantaEolica, que requiere reportar horas sin velocidad mínima. se agrega aca y con un nombre genérico para no depender de "instanceof" o de algun otro "truco"
     public String reporteOtrosIncumplimientos() {
     	return "";
+    }
+
+    /** METODOS PRIVADOS */
+
+    // por defecto el toString de LocalDateTime parece no mostrar los segundos en la hora y hace que falle el test registraYConsultaPlanes
+    private String fechaISOcompleta(LocalDateTime fecha) {
+    	return fecha.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
     }
 }

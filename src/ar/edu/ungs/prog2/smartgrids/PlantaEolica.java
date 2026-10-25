@@ -38,6 +38,8 @@ public class PlantaEolica extends PlantaRenovable {
     	return reporteHorasSinVelocidadMinima();
     }
     
+    /** METODOS PRIVADOS */
+
     // interpretamos que en cada hora sin cumplimiento deberia ir la maxima velocidad alcanzada (la consigna no lo especifica)
     private String reporteHorasSinVelocidadMinima() {
     	double[] velocidadesMaximas = velocidadesMaximasPorHora();

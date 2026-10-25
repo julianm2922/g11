@@ -55,28 +55,6 @@ public class SmartGrids implements ISmartGrids {
 		proximoIdPlanta++;
 	}
 
-	private void validarNombrePlanta(String nombre) {
-		if (nombre == null || nombre.isEmpty())
-			throw new IllegalArgumentException("El nombre de la planta es obligatorio");
-		if (plantas.containsKey(nombre))
-			throw new IllegalArgumentException("Ya existe una planta con el nombre " + nombre);
-	}
-
-	private Planta buscarPlanta(String nombre) {
-		Planta planta = plantas.get(nombre);
-		if (planta == null)
-			throw new RuntimeException("No existe la planta " + nombre);
-		return planta;
-	}
-
-	private Planta buscarPlanta(String nombre, boolean soloActiva) {
-		Planta planta = buscarPlanta(nombre);
-		
-		if (!planta.estaActiva() && soloActiva)
-			throw new RuntimeException("La planta " + nombre + " esta inactiva");
-		return planta;
-	}
-
 	@Override
 	public List<String> consultarPlantas() {
 		ArrayList<String> lista = new ArrayList<>();
@@ -177,7 +155,7 @@ public class SmartGrids implements ISmartGrids {
 			String fuente = plantaRenovable.getFuentePrimaria();
 			Integer cantidad = cantPlantasPorFuente.get(fuente);
 			
-			int newCantidad = cantidad == null ? 1 : cantidad++;
+			int newCantidad = cantidad == null ? 1 : cantidad + 1;
 			cantPlantasPorFuente.put(fuente, newCantidad);
 		}
 		
@@ -256,4 +234,27 @@ public class SmartGrids implements ISmartGrids {
 		return inactivas;
 	}
 
+	/** METODOS PRIVADOS */
+
+	private void validarNombrePlanta(String nombre) {
+		if (nombre == null || nombre.isEmpty())
+			throw new IllegalArgumentException("El nombre de la planta es obligatorio");
+		if (plantas.containsKey(nombre))
+			throw new IllegalArgumentException("Ya existe una planta con el nombre " + nombre);
+	}
+
+	private Planta buscarPlanta(String nombre) {
+		Planta planta = plantas.get(nombre);
+		if (planta == null)
+			throw new RuntimeException("No existe la planta " + nombre);
+		return planta;
+	}
+
+	private Planta buscarPlanta(String nombre, boolean soloActiva) {
+		Planta planta = buscarPlanta(nombre);
+
+		if (!planta.estaActiva() && soloActiva)
+			throw new RuntimeException("La planta " + nombre + " esta inactiva");
+		return planta;
+	}
 }
