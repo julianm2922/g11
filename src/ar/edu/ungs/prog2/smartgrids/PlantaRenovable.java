@@ -20,4 +20,9 @@ public abstract class PlantaRenovable extends Planta {
     public double getEficienciaPromedio() {
         return eficienciaPromedio;
     }
+    
+    @Override
+    public boolean esRenovable() {
+    	return true;
+    }
 }

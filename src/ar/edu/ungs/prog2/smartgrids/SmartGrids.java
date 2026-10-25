@@ -142,7 +142,6 @@ public class SmartGrids implements ISmartGrids {
 	@Override
 	public double totalGenerado(String nombre) {
 		Planta planta = buscarPlanta(nombre);
-		// TODO Auto-generated method stub
 		return planta.calcularTotalGenerado();
 	}
 
@@ -169,8 +168,20 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public Map<String, Integer> plantasRenovablesPorFuente() {
-		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, Integer> cantPlantasPorFuente = new HashMap<>();
+
+		for (Planta planta : plantas.values()) {
+			if (!planta.esRenovable()) continue;
+			
+			PlantaRenovable plantaRenovable = (PlantaRenovable) planta;
+			String fuente = plantaRenovable.getFuentePrimaria();
+			Integer cantidad = cantPlantasPorFuente.get(fuente);
+			
+			int newCantidad = cantidad == null ? 1 : cantidad++;
+			cantPlantasPorFuente.put(fuente, newCantidad);
+		}
+		
+		return cantPlantasPorFuente;
 	}
 
 	@Override
@@ -186,11 +197,15 @@ public class SmartGrids implements ISmartGrids {
 		}
 		return nombresPlantas;
 	}
+	
 
 	@Override
 	public String horasSinVelocidadMinimaPorPlantaEolica() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder reporte = new StringBuilder("Plantas Eolicas: Horas con poco viento\n");
+		for (Planta planta : plantas.values()) {
+			reporte.append(planta.reporteOtrosIncumplimientos());
+		}
+		return reporte.toString();
 	}
 
 	@Override
@@ -205,7 +220,6 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public List<String> plantasOrdenadasPorEnergiaGenerada() {
-		// TODO Auto-generated method stub
 		ArrayList<Planta> listaPlantas = new ArrayList<Planta>(plantas.values());
 		
 		for(int i = 0; i < listaPlantas.size()-1; i++) {
@@ -229,7 +243,6 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public List<String> plantasInactivasEn(String fechaHora) {
-		// TODO Auto-generated method stub
 		LocalDateTime fh = LocalDateTime.parse(fechaHora);
 		ArrayList<String> inactivas = new ArrayList<String>();
 		

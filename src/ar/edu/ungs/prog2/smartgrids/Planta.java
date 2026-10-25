@@ -51,6 +51,8 @@ public abstract class Planta {
     	}
     	return histograma;
     }
+    
+    public abstract boolean esRenovable();
 
     public int getId() {
         return id;
@@ -131,7 +133,10 @@ public abstract class Planta {
     
     @Override
     public String toString() {
-    	return nombre + " (" + (activo ? "ACTIVA" : "INACTIVA") + "): " + fechaISOcompleta(fechaApertura);
+    	return new StringBuilder(nombre)
+			.append(" (").append(activo ? "ACTIVA" : "INACTIVA").append("): ")
+			.append(fechaISOcompleta(fechaApertura))
+			.toString();
     }
     
     // por defecto el toString de LocalDateTime parece no mostrar los segundos en la hora y hace que falle el test registraYConsultaPlanes
@@ -160,5 +165,10 @@ public abstract class Planta {
     		return true;
     	}
     	return false;
+    }
+    
+    // la funcion existe para PlantaEolica, que requiere reportar horas sin velocidad mínima. se agrega aca y con un nombre genérico para no depender de "instanceof" o de algun otro "truco"
+    public String reporteOtrosIncumplimientos() {
+    	return "";
     }
 }
