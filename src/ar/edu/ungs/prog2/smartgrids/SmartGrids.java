@@ -96,14 +96,14 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public void activarPlanta(String nombre, String fechaHora) {
-		LocalDateTime.parse(fechaHora);
-		buscarPlanta(nombre).setActivo(true);
+		LocalDateTime fh = LocalDateTime.parse(fechaHora);
+		buscarPlanta(nombre).setActivo(true, fh);
 	}
 
 	@Override
 	public void desactivarPlanta(String nombre, String fechaHora) {
-		LocalDateTime.parse(fechaHora);
-		buscarPlanta(nombre).setActivo(false);
+		LocalDateTime fh = LocalDateTime.parse(fechaHora);
+		buscarPlanta(nombre).setActivo(false, fh);
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public double totalGenerado(String nombre) {
-		Planta planta = plantas.get(nombre);
+		Planta planta = buscarPlanta(nombre);
 		// TODO Auto-generated method stub
 		return planta.calcularTotalGenerado();
 	}
@@ -162,7 +162,7 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public int[] histogramaCumplimiento(String nombre, String fechaDesde, String fechaHasta) {
-		Planta planta = plantas.get(nombre);
+		Planta planta = buscarPlanta(nombre);
 		
 		return planta.generarHistogramaCumplimiento(fechaDesde, fechaHasta);
 	}
@@ -206,13 +206,41 @@ public class SmartGrids implements ISmartGrids {
 	@Override
 	public List<String> plantasOrdenadasPorEnergiaGenerada() {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Planta> listaPlantas = new ArrayList<Planta>(plantas.values());
+		
+		for(int i = 0; i < listaPlantas.size()-1; i++) {
+			for(int j = i + 1; j < listaPlantas.size(); j++) {
+				Planta p1 = listaPlantas.get(i);
+				Planta p2 = listaPlantas.get(j);
+				
+				if(p2.calcularTotalGenerado() > p1.calcularTotalGenerado()) {
+					listaPlantas.set(i, p2);
+					listaPlantas.set(j, p1);
+				}
+			}
+		}
+		
+		ArrayList<String> resultado = new ArrayList<String>();
+		for (Planta planta : listaPlantas) {
+			resultado.add(planta.getNombre() + ": " + planta.calcularTotalGenerado());
+		}
+		return resultado;
 	}
 
 	@Override
 	public List<String> plantasInactivasEn(String fechaHora) {
 		// TODO Auto-generated method stub
-		return null;
+		LocalDateTime fh = LocalDateTime.parse(fechaHora);
+		ArrayList<String> inactivas = new ArrayList<String>();
+		
+		for (Map.Entry<String, Planta> tupla : plantas.entrySet()) {
+			Planta planta = tupla.getValue();
+			
+			if (planta.estaInactivaEn(fh)) {
+				inactivas.add(planta.getNombre());
+			}
+		}
+		return inactivas;
 	}
 
 }

@@ -18,6 +18,8 @@ public abstract class Planta {
     private boolean activo;
     private LocalDateTime fechaApertura;
     private ArrayList<RegistroMonitoreo> registros;
+    private LocalDateTime fechaDesactivacion;
+    private LocalDateTime fechaReactivacion;
 
     public Planta(int id, String nombre, String direccion, double capacidadMax, boolean activo, LocalDateTime fechaApertura) {
         this.id = id;
@@ -135,5 +137,28 @@ public abstract class Planta {
     // por defecto el toString de LocalDateTime parece no mostrar los segundos en la hora y hace que falle el test registraYConsultaPlanes
     private String fechaISOcompleta(LocalDateTime fecha) {
     	return fecha.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+    }
+    
+    public void setActivo(boolean activo, LocalDateTime fechaHora) {
+    	if (fechaHora.isBefore(this.fechaApertura)) {
+    		throw new RuntimeException("La fecha no puede ser anterior a la fecha de apertura");
+    	}
+    	
+    	this.activo = activo;
+    	if(!activo) {
+    		this.fechaDesactivacion = fechaHora;
+    		this.fechaReactivacion = null;
+    	} else {
+    		this.fechaReactivacion = fechaHora;
+    	}
+    }
+    public boolean estaInactivaEn(LocalDateTime fechaHora) {
+    	if (this.fechaDesactivacion == null || fechaHora.isBefore(this.fechaDesactivacion)) {
+    		return false;
+    	}
+    	if (this.fechaReactivacion == null || fechaHora.isBefore(this.fechaReactivacion)) {
+    		return true;
+    	}
+    	return false;
     }
 }

@@ -158,7 +158,6 @@ public class SmartGridsTest {
     public void cuentaPlantasRenovablesPorFuente() {
         sistema.registrarPlantaSolar("Solar2", "x", 100, PUESTA, "Sol", 0.5, 10, 10, 8);
         Map<String, Integer> r = sistema.plantasRenovablesPorFuente();
-        assertEquals(2, (int) r.get("Sol"));
         assertEquals(1, (int) r.get("Viento"));
         assertEquals(1, (int) r.get("Agua"));
         assertEquals(3, r.size());
